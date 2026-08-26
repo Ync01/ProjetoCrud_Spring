@@ -1,13 +1,16 @@
 package br.gov.sp.cps.demo.controller;
 
+import br.gov.sp.cps.demo.model.UsuarioDTO;
+import br.gov.sp.cps.demo.service.UsuarioService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class UsuarioController {
+
+    @Autowired
+    private UsuarioService usuarioService;
 
     @GetMapping("/")
     public String index() {
@@ -25,9 +28,9 @@ public class UsuarioController {
         return "Controller funcionando";
     }
 
-
-    @PostMapping
-    public String login(){
-        return "";
+    @PostMapping("/usuarios")
+    @ResponseBody
+    public String criarUsuario(@RequestBody UsuarioDTO usuarioDTO) {
+        return usuarioService.criar(usuarioDTO);
     }
 }
