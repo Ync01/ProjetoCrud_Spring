@@ -1,24 +1,40 @@
-package br.gov.sp.cps.demo.model;
+package br.gov.sp.cps.demo.entities;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 
 import java.time.LocalDate;
 
-public class UserModel {
-
+@Entity(name  = "UserTable")
+public class UsuariosEntities {
+    @Id
+    @GeneratedValue()
+    private Long primaryKey;
     private String name;
     private String password;
     private String email;
     private String cpf;
     private LocalDate birthDate;
 
-    public UserModel() {
+    public UsuariosEntities() {
     }
 
-    public UserModel(String name, String password, String email, String cpf, LocalDate birthDate) {
+    public UsuariosEntities(Long primaryKey, String name, String password, String email, String cpf, LocalDate birthDate) {
+        this.primaryKey = primaryKey;
         this.name = name;
         this.password = password;
         this.email = email;
         this.cpf = cpf;
         this.birthDate = birthDate;
+    }
+
+    public Long getPrimaryKey() {
+        return primaryKey;
+    }
+
+    public void setPrimaryKey(Long primaryKey) {
+        this.primaryKey = primaryKey;
     }
 
     public String getName() {
