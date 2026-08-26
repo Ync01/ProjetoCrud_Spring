@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-public class MainController {
+public class UsuarioController {
 
     @GetMapping("/")
     public String index() {
@@ -26,17 +26,8 @@ public class MainController {
     }
 
 
-    @PostMapping("/auth")
-    public String auth(
-            @RequestParam(value = "username", required = false) String email,
-            @RequestParam(value = "password", required = false) String senha) {
-
-        // Credenciais de teste
-        if ("test@test.com".equals(email) && "123".equals(senha)) {
-            return "AcessoP";
-        }
-
-        // Login incorreto
-        return "Index";
+    @PostMapping
+    public String login(){
+        return "";
     }
 }
