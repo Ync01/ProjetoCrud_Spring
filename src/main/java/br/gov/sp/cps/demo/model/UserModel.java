@@ -1,10 +1,8 @@
 package br.gov.sp.cps.demo.model;
 
-import jakarta.persistence.Entity;
-
 import java.time.LocalDate;
 
-public class user {
+public class UserModel {
 
     private String name;
     private String password;
