@@ -2,7 +2,7 @@ package br.gov.sp.cps.demo.model;
 
 import java.time.LocalDate;
 
-public class UserModel {
+public class UsuarioDTO {
 
     private String name;
     private String password;
@@ -10,10 +10,10 @@ public class UserModel {
     private String cpf;
     private LocalDate birthDate;
 
-    public UserModel() {
+    public UsuarioDTO() {
     }
 
-    public UserModel(String name, String password, String email, String cpf, LocalDate birthDate) {
+    public UsuarioDTO(String name, String password, String email, String cpf, LocalDate birthDate) {
         this.name = name;
         this.password = password;
         this.email = email;

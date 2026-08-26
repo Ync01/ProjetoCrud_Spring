@@ -7,7 +7,7 @@ import jakarta.persistence.Id;
 import java.time.LocalDate;
 
 @Entity(name  = "UserTable")
-public class UsuariosEntities {
+public class Usuario {
     @Id
     @GeneratedValue()
     private Long primaryKey;
@@ -17,10 +17,10 @@ public class UsuariosEntities {
     private String cpf;
     private LocalDate birthDate;
 
-    public UsuariosEntities() {
+    public Usuario() {
     }
 
-    public UsuariosEntities(Long primaryKey, String name, String password, String email, String cpf, LocalDate birthDate) {
+    public Usuario(Long primaryKey, String name, String password, String email, String cpf, LocalDate birthDate) {
         this.primaryKey = primaryKey;
         this.name = name;
         this.password = password;
