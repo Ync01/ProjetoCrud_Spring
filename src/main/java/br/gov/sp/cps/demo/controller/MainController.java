@@ -33,7 +33,7 @@ public class MainController {
 
         // Credenciais de teste
         if ("test@test.com".equals(email) && "123".equals(senha)) {
-            return "rAcessoP"
+            return "AcessoP";
         }
 
         // Login incorreto
