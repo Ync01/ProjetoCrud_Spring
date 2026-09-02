@@ -40,6 +40,23 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
+    public UsuarioDTO buscarPorEmail(String email) {
+        Usuario usuario = usuarioRepository.findByEmail(email);
+
+        if (usuario == null) {
+            return null;
+        }
+
+        return new UsuarioDTO(
+                usuario.getName(),
+                usuario.getPassword(),
+                usuario.getEmail(),
+                usuario.getCpf(),
+                usuario.getBirthDate()
+        );
+    }
+
+    @Override
     public String atualizar(Long id, UsuarioDTO usuarioDTO) {
         return "";
     }

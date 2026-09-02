@@ -13,6 +13,8 @@ public interface UsuarioService {
 
     UsuarioDTO buscarPorId(Long id);
 
+    UsuarioDTO buscarPorEmail(String email);
+
     String atualizar(Long id, UsuarioDTO usuario);
 
     String deletar(Long id);

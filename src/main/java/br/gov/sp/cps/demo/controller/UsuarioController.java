@@ -28,11 +28,33 @@ public class UsuarioController {
         return "Controller funcionando";
     }
 
+    @GetMapping("/login")
+    public String login() {
+        return "Login";
+    }
+
+    @GetMapping("/Login.html")
+    public String loginHtml() {
+        return "Login";
+    }
+
     @PostMapping("/usuarios")
     public String criarUsuario(@ModelAttribute UsuarioDTO usuarioDTO) {
 
         usuarioService.criar(usuarioDTO);
 
         return "redirect:/?sucesso";
+    }
+
+    @PostMapping("/autenticar")
+    public String autenticar(@RequestParam String email, @RequestParam String password) {
+
+        UsuarioDTO usuario = usuarioService.buscarPorEmail(email);
+
+        if (usuario != null && usuario.getPassword().equals(password)) {
+            return "AcessoP";
+        }
+
+        return "redirect:/login?erro";
     }
 }
