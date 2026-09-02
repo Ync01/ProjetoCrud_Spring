@@ -12,14 +12,14 @@ public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
 
-    @GetMapping("/")
+    @GetMapping("/Index")
     public String index() {
         return "Index";
     }
 
-    @GetMapping("/Index.html")
-    public String indexHtml() {
-        return "Index";
+    @GetMapping("/FloWork")
+    public String floWork() {
+        return "FloWork";
     }
 
     @GetMapping("/auth")
@@ -28,13 +28,8 @@ public class UsuarioController {
         return "Controller funcionando";
     }
 
-    @GetMapping("/login")
+    @GetMapping({"/login", "/Login.html"})
     public String login() {
-        return "Login";
-    }
-
-    @GetMapping("/Login.html")
-    public String loginHtml() {
         return "Login";
     }
 
@@ -43,12 +38,11 @@ public class UsuarioController {
 
         usuarioService.criar(usuarioDTO);
 
-        return "redirect:/?sucesso";
+        return "redirect:/FloWork";
     }
 
     @PostMapping("/autenticar")
     public String autenticar(@RequestParam String email, @RequestParam String password) {
-
         UsuarioDTO usuario = usuarioService.buscarPorEmail(email);
 
         if (usuario != null && usuario.getPassword().equals(password)) {

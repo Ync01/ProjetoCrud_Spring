@@ -1,15 +1,14 @@
 package br.gov.sp.cps.demo.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 
 @Entity(name  = "UserTable")
 public class Usuario {
+
     @Id
-    @GeneratedValue()
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long primaryKey;
     private String name;
     private String password;

@@ -1,10 +1,152 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FloWork - Gestão e Produtividade</title>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --bg: #0f172a;
+            --surface: #1e293b;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --radius: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: -0.5px;
+        }
+
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: var(--radius);
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .hero {
+            text-align: center;
+            padding: 5rem 1rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .card {
+            background-color: var(--surface);
+            padding: 2rem;
+            border-radius: var(--radius);
+            border: 1px solid #334155;
+        }
+
+        .card h3 {
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--text-muted);
+            border-top: 1px solid #334155;
+            margin-top: 4rem;
+        }
+    </style>
 </head>
 <body>
+
+<nav>
+    <div class="logo">FloWork</div>
+    <a href="#login" class="btn">Entrar</a>
+</nav>
+
+<main>
+    <section class="hero">
+        <h1>O fluxo perfeito para o seu trabalho</h1>
+        <p>Organize tarefas, automatize rotinas e mantenha sua equipe em sintonia em um único lugar.</p>
+        <a href="#comecar" class="btn">Começar Agora</a>
+    </section>
+
+    <section class="features">
+        <div class="card">
+            <h3>Gestão Visível</h3>
+            <p>Acompanhe o progresso do seu projeto em tempo real com painéis claros e intuitivos.</p>
+        </div>
+        <div class="card">
+            <h3>Automação Simples</h3>
+            <p>Elimine tarefas repetitivas criando regras de fluxo com apenas alguns cliques.</p>
+        </div>
+        <div class="card">
+            <h3>Colaboração</h3>
+            <p>Mantenha toda a equipe comunicada e focada nos objetivos principais.</p>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p>&copy; 2026 FloWork. Todos os direitos reservados.</p>
+</footer>
 
 </body>
 </html>
