@@ -22,6 +22,16 @@ public class UsuarioController {
         return "FloWork";
     }
 
+    @GetMapping("/LoginP")
+    public String loginP(){
+        return "LoginP";
+    }
+
+    @PostMapping("/btn")
+    public String handlePost() {
+        return "resultView";
+    }
+
     @GetMapping("/auth")
     @ResponseBody
     public String testAuth() {
