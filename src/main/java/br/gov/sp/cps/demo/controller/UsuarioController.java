@@ -29,8 +29,10 @@ public class UsuarioController {
     }
 
     @PostMapping("/usuarios")
-    @ResponseBody
-    public String criarUsuario(@RequestBody UsuarioDTO usuarioDTO) {
-        return usuarioService.criar(usuarioDTO);
+    public String criarUsuario(@ModelAttribute UsuarioDTO usuarioDTO) {
+
+        usuarioService.criar(usuarioDTO);
+
+        return "redirect:/?sucesso";
     }
 }
