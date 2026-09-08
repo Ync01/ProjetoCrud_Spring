@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FloWork - Login</title>
+    <title>ParkFlow - Login</title>
     <style>
         :root {
-            --primary: #6366f1;
-            --primary-hover: #4f46e5;
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
             --bg: #0f172a;
             --surface: #1e293b;
             --text: #f8fafc;
@@ -125,11 +125,11 @@
 
 <div class="login-card">
     <div class="login-header">
-        <div class="logo">FloWork</div>
-        <p class="subtitle">Acesse sua conta para continuar</p>
+        <div class="logo">ParkFlow</div>
+        <p class="subtitle">Acesse o sistema de gestão do estacionamento</p>
     </div>
 
-    <form action="/login" method="POST">
+    <form action="/autenticar" method="POST">
         <div class="form-group">
             <label for="email">E-mail</label>
             <input type="email" id="email" name="email" placeholder="seu@email.com" required>
@@ -144,7 +144,7 @@
     </form>
 
     <div class="footer-links">
-        <p>Não tem uma conta? <a href="/FloWork">Cadastre-se</a></p>
+        <p>Não tem uma conta? <a href="/Index">Cadastre-se</a></p>
     </div>
 </div>
 

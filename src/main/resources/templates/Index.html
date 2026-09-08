@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Cadastro de Usuário</title>
+    <title>ParkFlow - Cadastro</title>
 
     <style>
         * {
@@ -36,6 +36,14 @@
         .header {
             text-align: center;
             margin-bottom: 30px;
+        }
+
+        .header .logo {
+            color: #2563eb;
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
         }
 
         .header h1 {
@@ -130,12 +138,9 @@
 <div class="container">
 
     <div class="header">
-        <h1>Criar usuário</h1>
-        <p>Preencha os dados abaixo para cadastrar um novo usuário.
-
-            <a href="/login" class="btn">Entrar</a>
-
-            <a href="/login" class="btn">Fazer Login</a>
+        <div class="logo">ParkFlow</div>
+        <h1>Criar conta</h1>
+        <p>Cadastre-se para gerenciar o acesso ao estacionamento.</p>
     </div>
 
     <form action="/usuarios" method="post">
@@ -192,13 +197,21 @@
         </div>
 
         <button type="submit" class="button">
-            Cadrastar usuario
+            Cadastrar usuário
         </button>
 
     </form>
+
+    <div class="login-link">
+        <p>Já tem uma conta? <a href="/LoginP">Fazer login</a></p>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2026 ParkFlow. Sistema de gestão de estacionamento.</p>
+    </div>
+
 </div>
 
 </body>
 
 </html>
-```

@@ -17,9 +17,9 @@ public class UsuarioController {
         return "Index";
     }
 
-    @GetMapping("/FloWork")
-    public String floWork() {
-        return "FloWork";
+    @GetMapping("/ParkFlow")
+    public String parkFlow() {
+        return "ParkFlow";
     }
 
     @GetMapping("/LoginP")
@@ -38,17 +38,12 @@ public class UsuarioController {
         return "Controller funcionando";
     }
 
-    @GetMapping({"/login", "/Login.html"})
-    public String login() {
-        return "Login";
-    }
-
     @PostMapping("/usuarios")
     public String criarUsuario(@ModelAttribute UsuarioDTO usuarioDTO) {
 
         usuarioService.criar(usuarioDTO);
 
-        return "redirect:/FloWork";
+        return "redirect:/ParkFlow";
     }
 
     @PostMapping("/autenticar")
@@ -56,9 +51,9 @@ public class UsuarioController {
         UsuarioDTO usuario = usuarioService.buscarPorEmail(email);
 
         if (usuario != null && usuario.getPassword().equals(password)) {
-            return "AcessoP";
+            return "redirect:/ParkFlow";
         }
 
-        return "redirect:/login?erro";
+        return "redirect:/LoginP?erro";
     }
 }
