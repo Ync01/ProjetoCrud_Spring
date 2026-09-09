@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -105,6 +105,45 @@
       font-size: 0.95rem;
     }
 
+    .user-menu {
+      position: relative;
+    }
+
+    .user-btn {
+      background: transparent;
+      border: 1px solid var(--primary);
+      color: var(--text);
+    }
+
+    .dropdown {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: calc(100% + 8px);
+      background-color: var(--surface);
+      border: 1px solid #334155;
+      border-radius: var(--radius);
+      min-width: 140px;
+      overflow: hidden;
+      z-index: 10;
+    }
+
+    .dropdown.show {
+      display: block;
+    }
+
+    .dropdown a {
+      display: block;
+      padding: 0.7rem 1rem;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+
+    .dropdown a:hover {
+      background-color: var(--bg);
+    }
+
     footer {
       text-align: center;
       padding: 3rem 1rem;
@@ -118,13 +157,22 @@
 
 <nav>
   <div class="logo">ParkFlow</div>
+
+  <a th:if="${usuarioNome == null}" href="/LoginP" class="btn">Entrar</a>
+
+  <div class="user-menu" th:unless="${usuarioNome == null}">
+    <button type="button" class="btn user-btn" onclick="toggleUserMenu()" th:text="${usuarioNome}">Usuário</button>
+    <div class="dropdown" id="userDropdown">
+      <a href="/logout">Sair</a>
+    </div>
+  </div>
 </nav>
 
 <main>
   <section class="hero">
     <h1>Controle total do seu estacionamento</h1>
     <p>Gerencie vagas, mensalistas e o fluxo de veículos em tempo real, em um único painel simples e rápido.</p>
-    <a href="/Index" class="btn">Começar Agora</a>
+    <a href="/CadrastoVeiculo" class="btn">Começar Agora</a>
   </section>
 
   <section class="features">
@@ -146,6 +194,20 @@
 <footer>
   <p>&copy; 2026 ParkFlow. Sistema de gestão de estacionamento.</p>
 </footer>
+
+<script>
+  function toggleUserMenu() {
+    document.getElementById('userDropdown').classList.toggle('show');
+  }
+
+  document.addEventListener('click', function (event) {
+    var menu = document.querySelector('.user-menu');
+    var dropdown = document.getElementById('userDropdown');
+    if (menu && dropdown && !menu.contains(event.target)) {
+      dropdown.classList.remove('show');
+    }
+  });
+</script>
 
 </body>
 </html>

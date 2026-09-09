@@ -5,7 +5,6 @@ import br.gov.sp.cps.demo.model.VeiculoDTO;
 import br.gov.sp.cps.demo.repository.VeiculoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 
@@ -38,7 +37,7 @@ public class VeiculoServiceImpl implements VeiculoService {
     public VeiculoDTO buscarPorPlaca(String placa) {
 
 
-        Veiculo veiculo = veiculoRepository.findByPlate(placa);
+        Veiculo veiculo = veiculoRepository.findByPlaca(placa);
 
         if (veiculo == null){
             return null;
