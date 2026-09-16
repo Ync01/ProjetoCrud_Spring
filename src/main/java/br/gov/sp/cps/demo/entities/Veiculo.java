@@ -5,6 +5,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
+import java.time.LocalDateTime;
+
 @Entity(name = "UserVeiculo")
 public class Veiculo {
 
@@ -15,15 +17,17 @@ public class Veiculo {
     private String modelo;
     private String color;
     private String observacao;
+    private LocalDateTime dataEntrada;
 
     public Veiculo() {
     }
 
-    public Veiculo(String placa, String modelo, String color, String observacao) {
+    public Veiculo(String placa, String modelo, String color, String observacao, LocalDateTime dataEntrada) {
         this.placa = placa;
         this.modelo = modelo;
         this.color = color;
         this.observacao = observacao;
+        this.dataEntrada = dataEntrada;
     }
 
     public Long getPrimaryKey() {
@@ -64,5 +68,13 @@ public class Veiculo {
 
     public void setObservacao(String observacao) {
         this.observacao = observacao;
+    }
+
+    public LocalDateTime getDataEntrada() {
+        return dataEntrada;
+    }
+
+    public void setDataEntrada(LocalDateTime dataEntrada) {
+        this.dataEntrada = dataEntrada;
     }
 }

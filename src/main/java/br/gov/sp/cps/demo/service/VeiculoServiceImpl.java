@@ -6,6 +6,7 @@ import br.gov.sp.cps.demo.repository.VeiculoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -24,6 +25,7 @@ public class VeiculoServiceImpl implements VeiculoService {
         veiculo.setColor(veiculoDTO.getColor());
         veiculo.setModelo(veiculoDTO.getModelo());
         veiculo.setObservacao(veiculoDTO.getObservacao());
+        veiculo.setDataEntrada(LocalDateTime.now());
 
         veiculoRepository.save(veiculo);
 
@@ -40,7 +42,8 @@ public class VeiculoServiceImpl implements VeiculoService {
                     veiculo.getPlaca(),
                     veiculo.getModelo(),
                     veiculo.getColor(),
-                    veiculo.getObservacao()
+                    veiculo.getObservacao(),
+                    veiculo.getDataEntrada()
             ));
         }
 
@@ -59,7 +62,8 @@ public class VeiculoServiceImpl implements VeiculoService {
                 v.getPlaca(),
                 v.getModelo(),
                 v.getColor(),
-                v.getObservacao()
+                v.getObservacao(),
+                v.getDataEntrada()
         );
     }
 
@@ -72,7 +76,8 @@ public class VeiculoServiceImpl implements VeiculoService {
                 veiculo.getPlaca(),
                 veiculo.getModelo(),
                 veiculo.getColor(),
-                veiculo.getObservacao()
+                veiculo.getObservacao(),
+                veiculo.getDataEntrada()
         );
     }
 

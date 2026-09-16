@@ -201,6 +201,7 @@
                 <th>Placa</th>
                 <th>Modelo</th>
                 <th>Cor</th>
+                <th>Cadastrado em</th>
                 <th>Ações</th>
             </tr>
             </thead>
@@ -209,6 +210,7 @@
                 <td th:text="${v.placa}"></td>
                 <td th:text="${v.modelo}"></td>
                 <td th:text="${v.color}"></td>
+                <td th:text="${#temporals.format(v.dataEntrada, 'dd/MM/yyyy HH:mm')}"></td>
                 <td class="actions">
                     <a th:href="'/veiculos/editar/' + ${v.id}">Editar</a>
                     <a class="delete" th:href="'/veiculos/deletar/' + ${v.id}" onclick="return confirm('Excluir este veículo?')">Excluir</a>
