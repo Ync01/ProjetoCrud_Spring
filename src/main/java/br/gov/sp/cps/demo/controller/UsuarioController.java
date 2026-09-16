@@ -30,6 +30,7 @@ public class UsuarioController {
         return "LoginP";
     }
 
+
     @PostMapping("/usuarios")
     public String criarUsuario(@ModelAttribute UsuarioDTO usuarioDTO, HttpSession session) {
         usuarioService.criar(usuarioDTO);
