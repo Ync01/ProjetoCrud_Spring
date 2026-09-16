@@ -1,7 +1,7 @@
 package br.gov.sp.cps.demo.model;
 
-
 public class VeiculoDTO {
+    private Long id;
     private String placa;
     private String modelo;
     private String color;
@@ -10,11 +10,20 @@ public class VeiculoDTO {
     public VeiculoDTO() {
     }
 
-    public VeiculoDTO(String placa, String modelo, String color, String observacao) {
+    public VeiculoDTO(Long id, String placa, String modelo, String color, String observacao) {
+        this.id = id;
         this.placa = placa;
         this.modelo = modelo;
         this.color = color;
         this.observacao = observacao;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getPlaca() {

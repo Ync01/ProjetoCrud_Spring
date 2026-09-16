@@ -6,7 +6,9 @@ import br.gov.sp.cps.demo.repository.VeiculoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class VeiculoServiceImpl implements VeiculoService {
@@ -25,38 +27,75 @@ public class VeiculoServiceImpl implements VeiculoService {
 
         veiculoRepository.save(veiculo);
 
-        return "Veiculo criado com sucesso!";
+        return "Veículo criado com sucesso!";
     }
 
     @Override
     public List<VeiculoDTO> listarVeiculos() {
-        return List.of();
+        List<VeiculoDTO> veiculos = new ArrayList<>();
+
+        for (Veiculo veiculo : veiculoRepository.findAll()) {
+            veiculos.add(new VeiculoDTO(
+                    veiculo.getPrimaryKey(),
+                    veiculo.getPlaca(),
+                    veiculo.getModelo(),
+                    veiculo.getColor(),
+                    veiculo.getObservacao()
+            ));
+        }
+
+        return veiculos;
+    }
+
+    @Override
+    public VeiculoDTO buscarPorId(Long id) {
+        Optional<Veiculo> veiculo = veiculoRepository.findById(id);
+
+
+        Veiculo v = veiculo.get();
+
+        return new VeiculoDTO(
+                v.getPrimaryKey(),
+                v.getPlaca(),
+                v.getModelo(),
+                v.getColor(),
+                v.getObservacao()
+        );
     }
 
     @Override
     public VeiculoDTO buscarPorPlaca(String placa) {
-
-
         Veiculo veiculo = veiculoRepository.findByPlaca(placa);
 
-        if (veiculo == null){
-            return null;
-        }
         return new VeiculoDTO(
+                veiculo.getPrimaryKey(),
                 veiculo.getPlaca(),
-                veiculo.getColor(),
                 veiculo.getModelo(),
+                veiculo.getColor(),
                 veiculo.getObservacao()
         );
     }
 
     @Override
-    public String atualizar(Long id, VeiculoDTO veiculo) {
-        return "";
+    public String atualizar(Long id, VeiculoDTO veiculoDTO) {
+        Optional<Veiculo> veiculoExistente = veiculoRepository.findById(id);
+
+        Veiculo veiculo = veiculoExistente.get();
+        veiculo.setPlaca(veiculoDTO.getPlaca());
+        veiculo.setColor(veiculoDTO.getColor());
+        veiculo.setModelo(veiculoDTO.getModelo());
+        veiculo.setObservacao(veiculoDTO.getObservacao());
+
+        veiculoRepository.save(veiculo);
+
+        return "Veículo atualizado com sucesso!";
     }
 
     @Override
     public String deletar(Long id) {
-        return "";
+
+        veiculoRepository.deleteById(id);
+        return "Deletado com sucesso";
+
     }
 }

@@ -26,6 +26,14 @@ public class Veiculo {
         this.observacao = observacao;
     }
 
+    public Long getPrimaryKey() {
+        return primaryKey;
+    }
+
+    public void setPrimaryKey(Long primaryKey) {
+        this.primaryKey = primaryKey;
+    }
+
     public String getPlaca() {
         return placa;
     }
@@ -58,4 +66,3 @@ public class Veiculo {
         this.observacao = observacao;
     }
 }
-

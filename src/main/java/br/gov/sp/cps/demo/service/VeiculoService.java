@@ -10,6 +10,8 @@ public interface VeiculoService {
 
     List<VeiculoDTO> listarVeiculos();
 
+    VeiculoDTO buscarPorId(Long id);
+
     VeiculoDTO buscarPorPlaca(String placa);
 
     String atualizar(Long id, VeiculoDTO veiculo);
