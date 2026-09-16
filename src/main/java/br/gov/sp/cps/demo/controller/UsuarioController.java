@@ -30,22 +30,6 @@ public class UsuarioController {
         return "LoginP";
     }
 
-    @GetMapping("/CadrastoVeiculo")
-    public String CadrastoVeiculo(){
-        return "CadrastoVeiculo";
-    }
-
-    @PostMapping("/btn")
-    public String handlePost() {
-        return "resultView";
-    }
-
-    @GetMapping("/auth")
-    @ResponseBody
-    public String testAuth() {
-        return "Controller funcionando";
-    }
-
     @PostMapping("/usuarios")
     public String criarUsuario(@ModelAttribute UsuarioDTO usuarioDTO, HttpSession session) {
         usuarioService.criar(usuarioDTO);

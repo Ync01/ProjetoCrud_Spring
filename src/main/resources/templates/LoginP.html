@@ -129,6 +129,10 @@
         <p class="subtitle">Acesse o sistema de gestão do estacionamento</p>
     </div>
 
+    <p th:if="${param.erro != null}" style="color:#ef4444;text-align:center;margin-bottom:1rem;font-size:0.9rem;">
+        E-mail ou senha inválidos.
+    </p>
+
     <form action="/autenticar" method="POST">
         <div class="form-group">
             <label for="email">E-mail</label>
