@@ -350,9 +350,8 @@
         </div>
 
         <div class="card" style="animation-delay: 0.1s">
-            <h2>Veículos no pátio
-                <span class="badge-count" th:text="${#lists.size(veiculos.?[dataSaida == null])}">0</span>
-            </h2>
+
+            <h2>Veículos no pátio</h2>
 
             <table th:if="${!veiculos.?[dataSaida == null].isEmpty()}">
                 <thead>
@@ -386,9 +385,8 @@
 
 <div class="tab-panel" id="panel-saida">
     <div class="card">
-        <h2>Histórico de saídas
-            <span class="badge-count" th:text="${#lists.size(veiculos.?[dataSaida != null])}">0</span>
-        </h2>
+
+        <h2>Histórico de saídas</h2>
 
         <table th:if="${!veiculos.?[dataSaida != null].isEmpty()}">
             <thead>
