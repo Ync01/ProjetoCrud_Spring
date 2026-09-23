@@ -164,7 +164,7 @@
 
 <div class="wrapper">
     <div class="card">
-        <h2 th:text="${veiculo.id == null} ? 'Cadastrar veículo' : 'Editar veículo'">Cadastrar veículo</h2>
+        <h2 th:text="${veiculo.id == null} ? 'Cadastrar veículo' : 'Editar veículo'">Registrar veiculo</h2>
 
         <form th:action="${veiculo.id == null} ? '/veiculos' : '/veiculos/atualizar/' + ${veiculo.id}" method="post">
 
@@ -193,7 +193,7 @@
     </div>
 
     <div class="card">
-        <h2>Veículos cadastrados</h2>
+        <h2>Entrada de veiculo</h2>
 
         <table th:if="${!veiculos.isEmpty()}">
             <thead>
