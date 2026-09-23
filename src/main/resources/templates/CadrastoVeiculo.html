@@ -299,6 +299,31 @@
             animation: fadeIn 0.4s ease both;
         }
 
+        .search-box {
+            margin-bottom: 1rem;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.65rem 0.9rem;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            background-color: var(--bg);
+            color: var(--text);
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .search-box input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+        }
+
+        tbody tr.hidden-row {
+            display: none;
+        }
+
         @media (max-width: 720px) {
             .wrapper {
                 grid-template-columns: 1fr;
@@ -353,7 +378,11 @@
 
             <h2>Veículos no pátio</h2>
 
-            <table th:if="${!veiculos.?[dataSaida == null].isEmpty()}">
+            <div class="search-box">
+                <input type="text" id="buscaEntrada" placeholder="Pesquisar por placa..." oninput="filtrarTabela('tabelaEntrada', 'buscaEntrada')">
+            </div>
+
+            <table id="tabelaEntrada" th:if="${!veiculos.?[dataSaida == null].isEmpty()}">
                 <thead>
                 <tr>
                     <th>Placa</th>
@@ -388,7 +417,11 @@
 
         <h2>Histórico de saídas</h2>
 
-        <table th:if="${!veiculos.?[dataSaida != null].isEmpty()}">
+        <div class="search-box">
+            <input type="text" id="buscaSaida" placeholder="Pesquisar por placa..." oninput="filtrarTabela('tabelaSaida', 'buscaSaida')">
+        </div>
+
+        <table id="tabelaSaida" th:if="${!veiculos.?[dataSaida != null].isEmpty()}">
             <thead>
             <tr>
                 <th>Placa</th>
@@ -427,6 +460,18 @@
         });
         var alvo = document.getElementById('panel-' + nome);
         alvo.classList.add('active');
+    }
+
+    function filtrarTabela(idTabela, idInput) {
+        var termo = document.getElementById(idInput).value.trim().toUpperCase();
+        var tabela = document.getElementById(idTabela);
+        if (!tabela) return;
+
+        var linhas = tabela.querySelectorAll('tbody tr');
+        linhas.forEach(function (linha) {
+            var placa = linha.querySelector('td').textContent.trim().toUpperCase();
+            linha.classList.toggle('hidden-row', termo !== '' && placa.indexOf(termo) === -1);
+        });
     }
 </script>
 
