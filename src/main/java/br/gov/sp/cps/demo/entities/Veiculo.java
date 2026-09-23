@@ -18,6 +18,7 @@ public class Veiculo {
     private String color;
     private String observacao;
     private LocalDateTime dataEntrada;
+    private LocalDateTime dataSaida;
 
     public Veiculo() {
     }
@@ -76,5 +77,13 @@ public class Veiculo {
 
     public void setDataEntrada(LocalDateTime dataEntrada) {
         this.dataEntrada = dataEntrada;
+    }
+
+    public LocalDateTime getDataSaida() {
+        return dataSaida;
+    }
+
+    public void setDataSaida(LocalDateTime dataSaida) {
+        this.dataSaida = dataSaida;
     }
 }

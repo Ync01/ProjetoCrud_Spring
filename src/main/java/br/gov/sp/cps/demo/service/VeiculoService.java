@@ -18,4 +18,6 @@ public interface VeiculoService {
 
     String deletar(Long id);
 
+    String darSaida(Long id);
+
 }

@@ -43,7 +43,8 @@ public class VeiculoServiceImpl implements VeiculoService {
                     veiculo.getModelo(),
                     veiculo.getColor(),
                     veiculo.getObservacao(),
-                    veiculo.getDataEntrada()
+                    veiculo.getDataEntrada(),
+                    veiculo.getDataSaida()
             ));
         }
 
@@ -53,7 +54,6 @@ public class VeiculoServiceImpl implements VeiculoService {
     @Override
     public VeiculoDTO buscarPorId(Long id) {
         Optional<Veiculo> veiculo = veiculoRepository.findById(id);
-
 
         Veiculo v = veiculo.get();
 
@@ -102,5 +102,17 @@ public class VeiculoServiceImpl implements VeiculoService {
         veiculoRepository.deleteById(id);
         return "Deletado com sucesso";
 
+    }
+
+    @Override
+    public String darSaida(Long id) {
+        Optional<Veiculo> veiculoExistente = veiculoRepository.findById(id);
+
+        Veiculo veiculo = veiculoExistente.get();
+        veiculo.setDataSaida(LocalDateTime.now());
+
+        veiculoRepository.save(veiculo);
+
+        return "Saída registrada com sucesso!";
     }
 }

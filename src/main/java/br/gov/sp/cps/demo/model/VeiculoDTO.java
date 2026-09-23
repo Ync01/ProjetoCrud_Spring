@@ -9,6 +9,7 @@ public class VeiculoDTO {
     private String color;
     private String observacao;
     private LocalDateTime dataEntrada;
+    private LocalDateTime dataSaida;
 
     public VeiculoDTO() {
     }
@@ -21,6 +22,14 @@ public class VeiculoDTO {
         this.dataEntrada = dataEntrada;
     }
 
+    public LocalDateTime getDataSaida() {
+        return dataSaida;
+    }
+
+    public void setDataSaida(LocalDateTime dataSaida) {
+        this.dataSaida = dataSaida;
+    }
+
     public VeiculoDTO(Long id, String placa, String modelo, String color, String observacao, LocalDateTime dataEntrada) {
         this.id = id;
         this.placa = placa;
@@ -28,6 +37,16 @@ public class VeiculoDTO {
         this.color = color;
         this.observacao = observacao;
         this.dataEntrada = dataEntrada;
+    }
+
+    public VeiculoDTO(Long id, String placa, String modelo, String color, String observacao, LocalDateTime dataEntrada, LocalDateTime dataSaida) {
+        this.id = id;
+        this.placa = placa;
+        this.modelo = modelo;
+        this.color = color;
+        this.observacao = observacao;
+        this.dataEntrada = dataEntrada;
+        this.dataSaida = dataSaida;
     }
 
     public Long getId() {

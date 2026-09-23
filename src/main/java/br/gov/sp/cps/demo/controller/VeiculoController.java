@@ -47,4 +47,10 @@ public class VeiculoController {
         veiculoService.deletar(id);
         return "redirect:/CadrastoVeiculo";
     }
+
+    @GetMapping("/veiculos/saida/{id}")
+    public String darSaida(@PathVariable Long id) {
+        veiculoService.darSaida(id);
+        return "redirect:/CadrastoVeiculo";
+    }
 }
