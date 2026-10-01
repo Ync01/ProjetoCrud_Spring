@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<!--/* Página usada pelo Spring Boot para erros não tratados (403 CSRF, 404, 405, 500...).
+     Nunca mostra detalhes internos. */-->
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ParkFlow - Erro</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="centralizado">
+
+<div class="card erro-card">
+    <div class="logo">ParkFlow</div>
+    <h2>Ops, algo deu errado</h2>
+    <p th:switch="${status}">
+        <span th:case="403">Sua sessão expirou ou o formulário é inválido. Recarregue a página e tente novamente.</span>
+        <span th:case="404">Página não encontrada.</span>
+        <span th:case="400">Requisição inválida.</span>
+        <span th:case="405">Operação não permitida.</span>
+        <span th:case="*">Ocorreu um erro inesperado. Tente novamente mais tarde.</span>
+    </p>
+    <a href="/" class="btn">Voltar ao início</a>
+</div>
+
+</body>
+</html>

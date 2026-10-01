@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ParkFlow - Gestão de Estacionamento</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<nav>
+    <div class="logo">ParkFlow</div>
+
+    <div th:replace="~{fragments/usuario :: menu}"></div>
+</nav>
+
+<main>
+    <div class="largura-1000">
+        <div th:replace="~{fragments/mensagens :: mensagens}"></div>
+    </div>
+
+    <section class="hero">
+        <h1>Controle total do seu estacionamento</h1>
+        <p>Registre a entrada e a saída dos veículos e consulte o histórico em um único painel simples e rápido.</p>
+        <a href="/veiculos" class="btn" th:text="${ehAdmin} ? 'Começar Agora' : 'Consultar veículos'">Começar Agora</a>
+        <a href="/admin/usuarios" class="btn btn-secundario" th:if="${ehAdmin}">Gerenciar usuários</a>
+    </section>
+
+    <section class="features">
+        <div class="card">
+            <h3>Entrada de Veículos</h3>
+            <p>Cadastre placa, modelo e cor. O horário de entrada é registrado automaticamente.</p>
+        </div>
+        <div class="card">
+            <h3>Saída de Veículos</h3>
+            <p>Registre a saída com um clique e acompanhe quem ainda está no pátio.</p>
+        </div>
+        <div class="card">
+            <h3>Histórico de Veículos</h3>
+            <p>Consulte entradas e saídas e pesquise por placa.</p>
+        </div>
+        <div class="card">
+            <h3>Vagas e Mensalistas <span class="planejado">planejado</span></h3>
+            <p>Controle de vagas e de clientes mensalistas ainda não estão disponíveis.</p>
+        </div>
+    </section>
+</main>
+
+<footer th:replace="~{fragments/footer :: rodape}"></footer>
+
+
+</body>
+</html>
