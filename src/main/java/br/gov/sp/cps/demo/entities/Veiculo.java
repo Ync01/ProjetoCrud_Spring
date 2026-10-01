@@ -1,5 +1,6 @@
 package br.gov.sp.cps.demo.entities;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -7,36 +8,41 @@ import jakarta.persistence.Id;
 
 import java.time.LocalDateTime;
 
+// Os nomes das colunas (primary_key, color) foram mantidos para usar os dados já existentes.
 @Entity(name = "UserVeiculo")
 public class Veiculo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long primaryKey;
+    @Column(name = "primary_key")
+    private Long id;
+
+    @Column(nullable = false)
     private String placa;
+
+    @Column(nullable = false)
     private String modelo;
-    private String color;
+
+    @Column(name = "color", nullable = false)
+    private String cor;
+
     private String observacao;
+
+    @Column(nullable = false)
     private LocalDateTime dataEntrada;
+
+    // Nulo enquanto o veículo está no pátio
     private LocalDateTime dataSaida;
 
     public Veiculo() {
     }
 
-    public Veiculo(String placa, String modelo, String color, String observacao, LocalDateTime dataEntrada) {
-        this.placa = placa;
-        this.modelo = modelo;
-        this.color = color;
-        this.observacao = observacao;
-        this.dataEntrada = dataEntrada;
+    public Long getId() {
+        return id;
     }
 
-    public Long getPrimaryKey() {
-        return primaryKey;
-    }
-
-    public void setPrimaryKey(Long primaryKey) {
-        this.primaryKey = primaryKey;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getPlaca() {
@@ -55,12 +61,12 @@ public class Veiculo {
         this.modelo = modelo;
     }
 
-    public String getColor() {
-        return color;
+    public String getCor() {
+        return cor;
     }
 
-    public void setColor(String color) {
-        this.color = color;
+    public void setCor(String cor) {
+        this.cor = cor;
     }
 
     public String getObservacao() {

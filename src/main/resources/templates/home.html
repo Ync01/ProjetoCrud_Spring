@@ -11,19 +11,19 @@
 <nav>
     <div class="logo">ParkFlow</div>
 
-    <div class="user-menu">
-        <button type="button" class="btn user-btn" onclick="toggleUserMenu()" th:text="${usuarioNome}">Usuário</button>
-        <div class="dropdown" id="userDropdown">
-            <a href="/logout">Sair</a>
-        </div>
-    </div>
+    <div th:replace="~{fragments/usuario :: menu}"></div>
 </nav>
 
 <main>
+    <div class="largura-1000">
+        <div th:replace="~{fragments/mensagens :: mensagens}"></div>
+    </div>
+
     <section class="hero">
         <h1>Controle total do seu estacionamento</h1>
         <p>Registre a entrada e a saída dos veículos e consulte o histórico em um único painel simples e rápido.</p>
-        <a href="/veiculos" class="btn">Começar Agora</a>
+        <a href="/veiculos" class="btn" th:text="${ehAdmin} ? 'Começar Agora' : 'Consultar veículos'">Começar Agora</a>
+        <a href="/admin/usuarios" class="btn btn-secundario" th:if="${ehAdmin}">Gerenciar usuários</a>
     </section>
 
     <section class="features">
@@ -48,19 +48,6 @@
 
 <footer th:replace="~{fragments/footer :: rodape}"></footer>
 
-<script>
-    function toggleUserMenu() {
-        document.getElementById('userDropdown').classList.toggle('show');
-    }
-
-    document.addEventListener('click', function (event) {
-        var menu = document.querySelector('.user-menu');
-        var dropdown = document.getElementById('userDropdown');
-        if (menu && dropdown && !menu.contains(event.target)) {
-            dropdown.classList.remove('show');
-        }
-    });
-</script>
 
 </body>
 </html>

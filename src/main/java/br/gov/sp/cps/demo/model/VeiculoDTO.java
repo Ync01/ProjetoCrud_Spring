@@ -3,10 +3,11 @@ package br.gov.sp.cps.demo.model;
 import java.time.LocalDateTime;
 
 public class VeiculoDTO {
+
     private Long id;
     private String placa;
     private String modelo;
-    private String color;
+    private String cor;
     private String observacao;
     private LocalDateTime dataEntrada;
     private LocalDateTime dataSaida;
@@ -14,36 +15,12 @@ public class VeiculoDTO {
     public VeiculoDTO() {
     }
 
-    public LocalDateTime getDataEntrada() {
-        return dataEntrada;
-    }
-
-    public void setDataEntrada(LocalDateTime dataEntrada) {
-        this.dataEntrada = dataEntrada;
-    }
-
-    public LocalDateTime getDataSaida() {
-        return dataSaida;
-    }
-
-    public void setDataSaida(LocalDateTime dataSaida) {
-        this.dataSaida = dataSaida;
-    }
-
-    public VeiculoDTO(Long id, String placa, String modelo, String color, String observacao, LocalDateTime dataEntrada) {
+    public VeiculoDTO(Long id, String placa, String modelo, String cor, String observacao,
+                      LocalDateTime dataEntrada, LocalDateTime dataSaida) {
         this.id = id;
         this.placa = placa;
         this.modelo = modelo;
-        this.color = color;
-        this.observacao = observacao;
-        this.dataEntrada = dataEntrada;
-    }
-
-    public VeiculoDTO(Long id, String placa, String modelo, String color, String observacao, LocalDateTime dataEntrada, LocalDateTime dataSaida) {
-        this.id = id;
-        this.placa = placa;
-        this.modelo = modelo;
-        this.color = color;
+        this.cor = cor;
         this.observacao = observacao;
         this.dataEntrada = dataEntrada;
         this.dataSaida = dataSaida;
@@ -73,12 +50,12 @@ public class VeiculoDTO {
         this.modelo = modelo;
     }
 
-    public String getColor() {
-        return color;
+    public String getCor() {
+        return cor;
     }
 
-    public void setColor(String color) {
-        this.color = color;
+    public void setCor(String cor) {
+        this.cor = cor;
     }
 
     public String getObservacao() {
@@ -87,5 +64,21 @@ public class VeiculoDTO {
 
     public void setObservacao(String observacao) {
         this.observacao = observacao;
+    }
+
+    public LocalDateTime getDataEntrada() {
+        return dataEntrada;
+    }
+
+    public void setDataEntrada(LocalDateTime dataEntrada) {
+        this.dataEntrada = dataEntrada;
+    }
+
+    public LocalDateTime getDataSaida() {
+        return dataSaida;
+    }
+
+    public void setDataSaida(LocalDateTime dataSaida) {
+        this.dataSaida = dataSaida;
     }
 }

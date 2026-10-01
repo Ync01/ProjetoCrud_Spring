@@ -543,3 +543,62 @@ nav {
         grid-template-columns: 1fr;
     }
 }
+
+/* ---------- Perfis e administração ---------- */
+.top-bar-direita {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.wrapper.wrapper-unica {
+    grid-template-columns: 1fr;
+}
+
+.badge-perfil {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    border-radius: 999px;
+    padding: 0.05rem 0.5rem;
+    margin-left: 0.4rem;
+    background-color: var(--bg);
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+}
+
+.badge-perfil.admin {
+    background-color: var(--primary);
+    border-color: var(--primary);
+    color: #fff;
+}
+
+.dropdown form {
+    margin: 0;
+}
+
+.dropdown button {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 0.7rem 1rem;
+    background: transparent;
+    border: none;
+    color: var(--text);
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.dropdown button:hover {
+    background-color: var(--bg);
+}
+
+.form-group select {
+    width: 100%;
+    padding: 0.7rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background-color: var(--bg);
+    color: var(--text);
+    font-size: 0.95rem;
+}

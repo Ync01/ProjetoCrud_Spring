@@ -6,9 +6,15 @@ import java.util.List;
 
 public interface VeiculoService {
 
-    String cadrastoVeiculo(VeiculoDTO veiculo);
+    String cadastrarVeiculo(VeiculoDTO veiculo);
 
     List<VeiculoDTO> listarVeiculos();
+
+    // Veículos que ainda estão no pátio
+    List<VeiculoDTO> listarAtivos();
+
+    // Veículos que já saíram
+    List<VeiculoDTO> listarHistorico();
 
     VeiculoDTO buscarPorId(Long id);
 

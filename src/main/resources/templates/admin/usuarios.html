@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<!-- Gerenciamento de usuários (somente ADMIN; protegido no backend pelo AdminInterceptor) -->
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ParkFlow - Usuários</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="pagina">
+
+<div class="top-bar">
+    <div class="logo">ParkFlow</div>
+    <div class="top-bar-direita">
+        <a href="/home" class="link-back">&larr; Voltar</a>
+        <div th:replace="~{fragments/usuario :: menu}"></div>
+    </div>
+</div>
+
+<div class="largura-1000">
+    <div th:replace="~{fragments/mensagens :: mensagens}"></div>
+</div>
+
+<div class="wrapper">
+    <div class="card" style="animation-delay: 0.05s">
+        <h2 th:text="${usuario.id == null} ? 'Novo usuário' : 'Editar usuário'">Novo usuário</h2>
+
+        <form th:action="${usuario.id == null} ? '/admin/usuarios' : '/admin/usuarios/atualizar/' + ${usuario.id}" method="post">
+            <input type="hidden" name="_csrf" th:value="${csrfToken}">
+
+            <div class="form-group">
+                <label for="nome">Nome completo</label>
+                <input type="text" id="nome" name="nome" th:value="${usuario.nome}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">E-mail</label>
+                <input type="email" id="email" name="email" th:value="${usuario.email}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="cpf">CPF</label>
+                <input type="text" id="cpf" name="cpf" th:value="${usuario.cpf}" placeholder="000.000.000-00" maxlength="14"
+                       th:required="${usuario.id == null}">
+            </div>
+
+            <div class="form-group">
+                <label for="dataNascimento">Data de nascimento</label>
+                <input type="date" id="dataNascimento" name="dataNascimento" th:value="${usuario.dataNascimento}">
+            </div>
+
+            <div class="form-group">
+                <label for="senha" th:text="${usuario.id == null} ? 'Senha' : 'Nova senha (deixe em branco para manter)'">Senha</label>
+                <input type="password" id="senha" name="senha" minlength="8" placeholder="Mínimo de 8 caracteres"
+                       th:required="${usuario.id == null}">
+            </div>
+
+            <div class="form-group">
+                <label for="tipo">Perfil</label>
+                <select id="tipo" name="tipo" required>
+                    <option value="USER" th:selected="${usuario.tipo != 'ADMIN'}">USER (somente consulta)</option>
+                    <option value="ADMIN" th:selected="${usuario.tipo == 'ADMIN'}">ADMIN (acesso total)</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-bloco" th:text="${usuario.id == null} ? 'Cadastrar usuário' : 'Salvar alterações'">Cadastrar usuário</button>
+            <a href="/admin/usuarios" class="btn btn-secundario btn-bloco" th:if="${usuario.id != null}">Cancelar edição</a>
+        </form>
+    </div>
+
+    <div class="card" style="animation-delay: 0.1s">
+        <h2>Usuários cadastrados</h2>
+
+        <table th:if="${!usuarios.isEmpty()}">
+            <thead>
+            <tr>
+                <th>Nome</th>
+                <th>E-mail</th>
+                <th>Perfil</th>
+                <th>Ações</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="u : ${usuarios}">
+                <td th:text="${u.nome}"></td>
+                <td th:text="${u.email}"></td>
+                <td><span class="badge-perfil" th:classappend="${u.tipo == 'ADMIN'} ? 'admin'" th:text="${u.tipo}"></span></td>
+                <td class="actions">
+                    <a th:href="'/admin/usuarios/editar/' + ${u.id}">Editar</a>
+                    <form th:action="'/admin/usuarios/deletar/' + ${u.id}" method="post" onsubmit="return confirm('Excluir este usuário?')">
+                        <input type="hidden" name="_csrf" th:value="${csrfToken}">
+                        <button type="submit" class="delete-btn">Excluir</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <p class="empty" th:if="${usuarios.isEmpty()}">Nenhum usuário cadastrado.</p>
+    </div>
+</div>
+
+<script>
+    // Máscara simples de CPF: 12345678909 -> 123.456.789-09
+    document.getElementById('cpf').addEventListener('input', function () {
+        var numeros = this.value.replace(/\D/g, '').slice(0, 11);
+        this.value = numeros
+            .replace(/(\d{3})(\d)/, '$1.$2')
+            .replace(/(\d{3})(\d)/, '$1.$2')
+            .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+    });
+</script>
+
+</body>
+</html>

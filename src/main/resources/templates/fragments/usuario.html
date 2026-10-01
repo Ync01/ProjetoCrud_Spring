@@ -1,0 +1,29 @@
+<!-- Nome e perfil do usuário logado, com o botão Sair (POST + CSRF) -->
+<div class="user-menu" th:fragment="menu" xmlns:th="http://www.thymeleaf.org">
+    <button type="button" class="btn user-btn" onclick="toggleUserMenu()">
+        <span th:text="${usuarioNome}">Usuário</span>
+        <span class="badge-perfil" th:classappend="${ehAdmin} ? 'admin'" th:text="${usuarioTipo}">USER</span>
+    </button>
+    <div class="dropdown" id="userDropdown">
+        <a href="/home">Início</a>
+        <a href="/veiculos">Veículos</a>
+        <a href="/admin/usuarios" th:if="${ehAdmin}">Usuários</a>
+        <form action="/logout" method="post">
+            <input type="hidden" name="_csrf" th:value="${csrfToken}">
+            <button type="submit">Sair</button>
+        </form>
+    </div>
+    <script>
+        function toggleUserMenu() {
+            document.getElementById('userDropdown').classList.toggle('show');
+        }
+
+        document.addEventListener('click', function (event) {
+            var menu = document.querySelector('.user-menu');
+            var dropdown = document.getElementById('userDropdown');
+            if (menu && dropdown && !menu.contains(event.target)) {
+                dropdown.classList.remove('show');
+            }
+        });
+    </script>
+</div>

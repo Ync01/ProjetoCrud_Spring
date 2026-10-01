@@ -1,5 +1,6 @@
 package br.gov.sp.cps.demo.controller;
 
+import br.gov.sp.cps.demo.entities.Usuario;
 import br.gov.sp.cps.demo.exception.RecursoNaoEncontradoException;
 import br.gov.sp.cps.demo.exception.RegraNegocioException;
 import jakarta.servlet.http.HttpSession;
@@ -28,6 +29,23 @@ public class ControllerAdviceGlobal {
         }
 
         return token;
+    }
+
+    // Dados do usuário logado para as páginas (o AutenticacaoInterceptor já os atualizou a partir do banco)
+    @ModelAttribute("usuarioNome")
+    public Object usuarioNome(HttpSession session) {
+        return session.getAttribute("usuarioNome");
+    }
+
+    @ModelAttribute("usuarioTipo")
+    public Object usuarioTipo(HttpSession session) {
+        return session.getAttribute("usuarioTipo");
+    }
+
+    // Usado nos templates só para esconder botões. A proteção real fica no AdminInterceptor.
+    @ModelAttribute("ehAdmin")
+    public boolean ehAdmin(HttpSession session) {
+        return Usuario.ADMIN.equals(session.getAttribute("usuarioTipo"));
     }
 
     @ExceptionHandler(RecursoNaoEncontradoException.class)

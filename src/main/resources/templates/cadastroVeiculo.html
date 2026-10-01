@@ -10,7 +10,10 @@
 
 <div class="top-bar">
     <div class="logo">ParkFlow</div>
-    <a href="/home" class="link-back">&larr; Voltar</a>
+    <div class="top-bar-direita">
+        <a href="/home" class="link-back">&larr; Voltar</a>
+        <div th:replace="~{fragments/usuario :: menu}"></div>
+    </div>
 </div>
 
 <div class="largura-1000">
@@ -23,8 +26,9 @@
 </div>
 
 <div class="tab-panel active" id="panel-entrada">
-    <div class="wrapper">
-        <div class="card" style="animation-delay: 0.05s">
+    <div class="wrapper" th:classappend="${!ehAdmin} ? 'wrapper-unica'">
+        <!-- Formulário só para ADMIN. Mesmo que alguém o recrie no navegador, o AdminInterceptor recusa o POST. -->
+        <div class="card" style="animation-delay: 0.05s" th:if="${ehAdmin}">
             <h2 th:text="${veiculo.id == null} ? 'Cadastrar veículo' : 'Editar veículo'">Cadastrar veículo</h2>
 
             <form th:action="${veiculo.id == null} ? '/veiculos' : '/veiculos/atualizar/' + ${veiculo.id}" method="post">
@@ -32,7 +36,8 @@
 
                 <div class="form-group">
                     <label for="placa">Placa</label>
-                    <input type="text" id="placa" name="placa" th:value="${veiculo.placa}" placeholder="ABC1D23" maxlength="7" required>
+                    <input type="text" id="placa" name="placa" th:value="${veiculo.placa}" placeholder="ABC1D23" maxlength="8"
+                       pattern="[A-Za-z]{3}-?[0-9][A-Za-z0-9][0-9]{2}" title="Formato ABC1234 ou ABC1D23" required>
                 </div>
 
                 <div class="form-group">
@@ -59,9 +64,9 @@
 
             <h2>Veículos no pátio</h2>
 
-            <div class="search-box">
-                <input type="text" id="buscaEntrada" placeholder="Pesquisar por placa..." oninput="filtrarTabela('tabelaEntrada', 'buscaEntrada')">
-            </div>
+            <form class="search-box" action="/veiculos" method="get">
+                <input type="text" id="buscaEntrada" name="placa" th:value="${placa}" placeholder="Pesquisar por placa..." oninput="filtrarTabela('tabelaEntrada', 'buscaEntrada')">
+            </form>
 
             <table id="tabelaEntrada" th:if="${!veiculosAtivos.isEmpty()}">
                 <thead>
@@ -70,7 +75,7 @@
                     <th>Modelo</th>
                     <th>Cor</th>
                     <th>Entrada</th>
-                    <th>Ações</th>
+                    <th th:if="${ehAdmin}">Ações</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -79,7 +84,7 @@
                     <td th:text="${v.modelo}"></td>
                     <td th:text="${v.cor}"></td>
                     <td th:text="${#temporals.format(v.dataEntrada, 'dd/MM/yyyy HH:mm')}"></td>
-                    <td class="actions">
+                    <td class="actions" th:if="${ehAdmin}">
                         <a th:href="'/veiculos/editar/' + ${v.id}">Editar</a>
 
                         <form th:action="'/veiculos/saida/' + ${v.id}" method="post">
@@ -96,7 +101,7 @@
                 </tbody>
             </table>
 
-            <p class="empty" th:if="${veiculosAtivos.isEmpty()}">Nenhum veículo no pátio no momento.</p>
+            <p class="empty" th:if="${veiculosAtivos.isEmpty()}" th:text="${placa != ''} ? 'Nenhum veículo no pátio com esta placa.' : 'Nenhum veículo no pátio no momento.'">Nenhum veículo no pátio no momento.</p>
         </div>
     </div>
 </div>
@@ -106,9 +111,9 @@
 
         <h2>Histórico de saídas</h2>
 
-        <div class="search-box">
-            <input type="text" id="buscaSaida" placeholder="Pesquisar por placa..." oninput="filtrarTabela('tabelaSaida', 'buscaSaida')">
-        </div>
+        <form class="search-box" action="/veiculos" method="get">
+            <input type="text" id="buscaSaida" name="placa" th:value="${placa}" placeholder="Pesquisar por placa..." oninput="filtrarTabela('tabelaSaida', 'buscaSaida')">
+        </form>
 
         <table id="tabelaSaida" th:if="${!veiculosHistorico.isEmpty()}">
             <thead>
@@ -118,7 +123,7 @@
                 <th>Cor</th>
                 <th>Entrada</th>
                 <th>Saída</th>
-                <th>Ações</th>
+                <th th:if="${ehAdmin}">Ações</th>
             </tr>
             </thead>
             <tbody>
@@ -128,7 +133,7 @@
                 <td th:text="${v.cor}"></td>
                 <td th:text="${#temporals.format(v.dataEntrada, 'dd/MM/yyyy HH:mm')}"></td>
                 <td th:text="${#temporals.format(v.dataSaida, 'dd/MM/yyyy HH:mm')}"></td>
-                <td class="actions">
+                <td class="actions" th:if="${ehAdmin}">
                     <form th:action="'/veiculos/deletar/' + ${v.id}" method="post" onsubmit="return confirm('Excluir este veículo?')">
                         <input type="hidden" name="_csrf" th:value="${csrfToken}">
                         <button type="submit" class="delete-btn">Excluir</button>
@@ -138,7 +143,7 @@
             </tbody>
         </table>
 
-        <p class="empty" th:if="${veiculosHistorico.isEmpty()}">Nenhuma saída registrada ainda.</p>
+        <p class="empty" th:if="${veiculosHistorico.isEmpty()}" th:text="${placa != ''} ? 'Nenhuma saída registrada para esta placa.' : 'Nenhuma saída registrada ainda.'">Nenhuma saída registrada ainda.</p>
     </div>
 </div>
 

@@ -1,40 +1,41 @@
 package br.gov.sp.cps.demo.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDate;
 
+// A senha só é usada na entrada (formulários). O sistema nunca preenche a senha
+// ao devolver um usuário para as páginas.
 public class UsuarioDTO {
 
-    private String name;
-    private String password;
+    private Long id;
+    private String nome;
     private String email;
     private String cpf;
-    private LocalDate birthDate;
+    private String senha;
+
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    private LocalDate dataNascimento;
+
+    private String tipo;
 
     public UsuarioDTO() {
     }
 
-    public UsuarioDTO(String name, String password, String email, String cpf, LocalDate birthDate) {
-        this.name = name;
-        this.password = password;
-        this.email = email;
-        this.cpf = cpf;
-        this.birthDate = birthDate;
+    public Long getId() {
+        return id;
     }
 
-    public String getName() {
-        return name;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getNome() {
+        return nome;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public String getEmail() {
@@ -53,11 +54,27 @@ public class UsuarioDTO {
         this.cpf = cpf;
     }
 
-    public LocalDate getBirthDate() {
-        return birthDate;
+    public String getSenha() {
+        return senha;
     }
 
-    public void setBirthDate(LocalDate birthDate) {
-        this.birthDate = birthDate;
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    public LocalDate getDataNascimento() {
+        return dataNascimento;
+    }
+
+    public void setDataNascimento(LocalDate dataNascimento) {
+        this.dataNascimento = dataNascimento;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 }
