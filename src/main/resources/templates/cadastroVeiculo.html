@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ParkFlow - Cadastro de Veículos</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="pagina">
+
+<div class="top-bar">
+    <div class="logo">ParkFlow</div>
+    <a href="/home" class="link-back">&larr; Voltar</a>
+</div>
+
+<div class="largura-1000">
+    <div th:replace="~{fragments/mensagens :: mensagens}"></div>
+</div>
+
+<div class="tabs">
+    <button type="button" class="tab-btn active" data-tab="entrada" onclick="mudarTab('entrada')">Entrada de Veículo</button>
+    <button type="button" class="tab-btn" data-tab="saida" onclick="mudarTab('saida')">Saída de Veículo</button>
+</div>
+
+<div class="tab-panel active" id="panel-entrada">
+    <div class="wrapper">
+        <div class="card" style="animation-delay: 0.05s">
+            <h2 th:text="${veiculo.id == null} ? 'Cadastrar veículo' : 'Editar veículo'">Cadastrar veículo</h2>
+
+            <form th:action="${veiculo.id == null} ? '/veiculos' : '/veiculos/atualizar/' + ${veiculo.id}" method="post">
+                <input type="hidden" name="_csrf" th:value="${csrfToken}">
+
+                <div class="form-group">
+                    <label for="placa">Placa</label>
+                    <input type="text" id="placa" name="placa" th:value="${veiculo.placa}" placeholder="ABC1D23" maxlength="7" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="modelo">Modelo</label>
+                    <input type="text" id="modelo" name="modelo" th:value="${veiculo.modelo}" placeholder="Digite o modelo" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="cor">Cor</label>
+                    <input type="text" id="cor" name="cor" th:value="${veiculo.cor}" placeholder="Digite a cor" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="observacao">Observação</label>
+                    <textarea id="observacao" name="observacao" rows="3" placeholder="Opcional" th:text="${veiculo.observacao}"></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-bloco" th:text="${veiculo.id == null} ? 'Registrar entrada' : 'Salvar alterações'">Registrar entrada</button>
+                <a href="/veiculos" class="btn btn-secundario btn-bloco" th:if="${veiculo.id != null}">Cancelar edição</a>
+            </form>
+        </div>
+
+        <div class="card" style="animation-delay: 0.1s">
+
+            <h2>Veículos no pátio</h2>
+
+            <div class="search-box">
+                <input type="text" id="buscaEntrada" placeholder="Pesquisar por placa..." oninput="filtrarTabela('tabelaEntrada', 'buscaEntrada')">
+            </div>
+
+            <table id="tabelaEntrada" th:if="${!veiculosAtivos.isEmpty()}">
+                <thead>
+                <tr>
+                    <th>Placa</th>
+                    <th>Modelo</th>
+                    <th>Cor</th>
+                    <th>Entrada</th>
+                    <th>Ações</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="v, iStat : ${veiculosAtivos}" th:style="'animation-delay: ' + ${iStat.index * 0.05} + 's'">
+                    <td><span class="status-dot"></span><span th:text="${v.placa}"></span></td>
+                    <td th:text="${v.modelo}"></td>
+                    <td th:text="${v.cor}"></td>
+                    <td th:text="${#temporals.format(v.dataEntrada, 'dd/MM/yyyy HH:mm')}"></td>
+                    <td class="actions">
+                        <a th:href="'/veiculos/editar/' + ${v.id}">Editar</a>
+
+                        <form th:action="'/veiculos/saida/' + ${v.id}" method="post">
+                            <input type="hidden" name="_csrf" th:value="${csrfToken}">
+                            <button type="submit" class="saida-btn">Dar saída</button>
+                        </form>
+
+                        <form th:action="'/veiculos/deletar/' + ${v.id}" method="post" onsubmit="return confirm('Excluir este veículo?')">
+                            <input type="hidden" name="_csrf" th:value="${csrfToken}">
+                            <button type="submit" class="delete-btn">Excluir</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <p class="empty" th:if="${veiculosAtivos.isEmpty()}">Nenhum veículo no pátio no momento.</p>
+        </div>
+    </div>
+</div>
+
+<div class="tab-panel" id="panel-saida">
+    <div class="card">
+
+        <h2>Histórico de saídas</h2>
+
+        <div class="search-box">
+            <input type="text" id="buscaSaida" placeholder="Pesquisar por placa..." oninput="filtrarTabela('tabelaSaida', 'buscaSaida')">
+        </div>
+
+        <table id="tabelaSaida" th:if="${!veiculosHistorico.isEmpty()}">
+            <thead>
+            <tr>
+                <th>Placa</th>
+                <th>Modelo</th>
+                <th>Cor</th>
+                <th>Entrada</th>
+                <th>Saída</th>
+                <th>Ações</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="v, iStat : ${veiculosHistorico}" th:style="'animation-delay: ' + ${iStat.index * 0.05} + 's'">
+                <td><span class="status-dot saiu"></span><span th:text="${v.placa}"></span></td>
+                <td th:text="${v.modelo}"></td>
+                <td th:text="${v.cor}"></td>
+                <td th:text="${#temporals.format(v.dataEntrada, 'dd/MM/yyyy HH:mm')}"></td>
+                <td th:text="${#temporals.format(v.dataSaida, 'dd/MM/yyyy HH:mm')}"></td>
+                <td class="actions">
+                    <form th:action="'/veiculos/deletar/' + ${v.id}" method="post" onsubmit="return confirm('Excluir este veículo?')">
+                        <input type="hidden" name="_csrf" th:value="${csrfToken}">
+                        <button type="submit" class="delete-btn">Excluir</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <p class="empty" th:if="${veiculosHistorico.isEmpty()}">Nenhuma saída registrada ainda.</p>
+    </div>
+</div>
+
+<script>
+    function mudarTab(nome) {
+        document.querySelectorAll('.tab-btn').forEach(function (btn) {
+            btn.classList.toggle('active', btn.dataset.tab === nome);
+        });
+        document.querySelectorAll('.tab-panel').forEach(function (panel) {
+            panel.classList.remove('active');
+        });
+        document.getElementById('panel-' + nome).classList.add('active');
+    }
+
+    function filtrarTabela(idTabela, idInput) {
+        var termo = document.getElementById(idInput).value.trim().toUpperCase();
+        var tabela = document.getElementById(idTabela);
+        if (!tabela) return;
+
+        tabela.querySelectorAll('tbody tr').forEach(function (linha) {
+            var placa = linha.querySelector('td').textContent.trim().toUpperCase();
+            linha.classList.toggle('hidden-row', termo !== '' && placa.indexOf(termo) === -1);
+        });
+    }
+</script>
+
+</body>
+</html>

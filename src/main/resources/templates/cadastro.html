@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ParkFlow - Cadastro</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="centralizado">
+
+<div class="auth-card">
+    <div class="auth-header">
+        <div class="logo">ParkFlow</div>
+        <h1>Criar conta</h1>
+        <p class="subtitle">Cadastre-se para gerenciar o acesso ao estacionamento.</p>
+    </div>
+
+    <div th:replace="~{fragments/mensagens :: mensagens}"></div>
+
+    <form action="/usuarios" method="post">
+        <input type="hidden" name="_csrf" th:value="${csrfToken}">
+
+        <div class="form-group">
+            <label for="nome">Nome completo</label>
+            <input type="text" id="nome" name="nome" th:value="${usuario.nome}" placeholder="Digite seu nome" required>
+        </div>
+
+        <div class="form-group">
+            <label for="email">E-mail</label>
+            <input type="email" id="email" name="email" th:value="${usuario.email}" placeholder="exemplo@email.com" required>
+        </div>
+
+        <div class="form-group">
+            <label for="cpf">CPF</label>
+            <input type="text" id="cpf" name="cpf" th:value="${usuario.cpf}" placeholder="000.000.000-00" maxlength="14" required>
+        </div>
+
+        <div class="form-group">
+            <label for="senha">Senha</label>
+            <input type="password" id="senha" name="senha" placeholder="Mínimo de 8 caracteres" minlength="8" required>
+        </div>
+
+        <div class="form-group">
+            <label for="dataNascimento">Data de nascimento</label>
+            <input type="date" id="dataNascimento" name="dataNascimento" th:value="${usuario.dataNascimento}" required>
+        </div>
+
+        <button type="submit" class="btn btn-bloco">Cadastrar usuário</button>
+    </form>
+
+    <div class="footer-links">
+        <p>Já tem uma conta? <a href="/login">Fazer login</a></p>
+    </div>
+
+    <footer th:replace="~{fragments/footer :: rodape}"></footer>
+</div>
+
+<script>
+    // Máscara simples de CPF: 12345678909 -> 123.456.789-09
+    document.getElementById('cpf').addEventListener('input', function () {
+        var numeros = this.value.replace(/\D/g, '').slice(0, 11);
+        numeros = numeros
+            .replace(/(\d{3})(\d)/, '$1.$2')
+            .replace(/(\d{3})(\d)/, '$1.$2')
+            .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+        this.value = numeros;
+    });
+</script>
+
+</body>
+</html>

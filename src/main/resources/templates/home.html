@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ParkFlow - Gestão de Estacionamento</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<nav>
+    <div class="logo">ParkFlow</div>
+
+    <div class="user-menu">
+        <button type="button" class="btn user-btn" onclick="toggleUserMenu()" th:text="${usuarioNome}">Usuário</button>
+        <div class="dropdown" id="userDropdown">
+            <a href="/logout">Sair</a>
+        </div>
+    </div>
+</nav>
+
+<main>
+    <section class="hero">
+        <h1>Controle total do seu estacionamento</h1>
+        <p>Registre a entrada e a saída dos veículos e consulte o histórico em um único painel simples e rápido.</p>
+        <a href="/veiculos" class="btn">Começar Agora</a>
+    </section>
+
+    <section class="features">
+        <div class="card">
+            <h3>Entrada de Veículos</h3>
+            <p>Cadastre placa, modelo e cor. O horário de entrada é registrado automaticamente.</p>
+        </div>
+        <div class="card">
+            <h3>Saída de Veículos</h3>
+            <p>Registre a saída com um clique e acompanhe quem ainda está no pátio.</p>
+        </div>
+        <div class="card">
+            <h3>Histórico de Veículos</h3>
+            <p>Consulte entradas e saídas e pesquise por placa.</p>
+        </div>
+        <div class="card">
+            <h3>Vagas e Mensalistas <span class="planejado">planejado</span></h3>
+            <p>Controle de vagas e de clientes mensalistas ainda não estão disponíveis.</p>
+        </div>
+    </section>
+</main>
+
+<footer th:replace="~{fragments/footer :: rodape}"></footer>
+
+<script>
+    function toggleUserMenu() {
+        document.getElementById('userDropdown').classList.toggle('show');
+    }
+
+    document.addEventListener('click', function (event) {
+        var menu = document.querySelector('.user-menu');
+        var dropdown = document.getElementById('userDropdown');
+        if (menu && dropdown && !menu.contains(event.target)) {
+            dropdown.classList.remove('show');
+        }
+    });
+</script>
+
+</body>
+</html>

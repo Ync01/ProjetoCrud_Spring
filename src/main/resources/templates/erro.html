@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ParkFlow - Erro</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="centralizado">
+
+<div class="card erro-card">
+    <div class="logo">ParkFlow</div>
+    <h2>Ops, algo deu errado</h2>
+    <p th:text="${mensagem}">Mensagem de erro</p>
+    <a href="/home" class="btn">Voltar ao início</a>
+</div>
+
+</body>
+</html>
