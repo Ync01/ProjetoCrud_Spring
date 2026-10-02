@@ -5,11 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ParkFlow - Cadastro de Veículos</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script th:src="@{/js/veiculos.js}" defer></script>
 </head>
 <body class="pagina">
+<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
 
 <div class="top-bar">
-    <div class="logo">ParkFlow</div>
+    <a class="logo" href="/home">ParkFlow</a>
     <div class="top-bar-direita">
         <a href="/home" class="link-back">&larr; Voltar</a>
         <div th:replace="~{fragments/usuario :: menu}"></div>
@@ -20,12 +22,14 @@
     <div th:replace="~{fragments/mensagens :: mensagens}"></div>
 </div>
 
-<div class="tabs">
-    <button type="button" class="tab-btn active" data-tab="entrada" onclick="mudarTab('entrada')">Entrada de Veículo</button>
-    <button type="button" class="tab-btn" data-tab="saida" onclick="mudarTab('saida')">Saída de Veículo</button>
+<main id="conteudo">
+<header class="page-heading"><div><span class="eyebrow">Operação / Veículos</span><h1>Movimento do pátio.</h1><p th:text="${ehAdmin} ? 'Registre chegadas, organize saídas e encontre cada veículo pela placa.' : 'Consulte os veículos presentes e acompanhe o histórico de saídas.'">Consulte os veículos.</p></div><div class="page-count"><strong th:text="${veiculosAtivos.size()}">0</strong><span th:text="${placa != ''} ? 'no pátio · filtro aplicado' : (${veiculosAtivos.size() == 1} ? 'veículo no pátio' : 'veículos no pátio')">veículos no pátio</span></div></header>
+<div class="tabs" role="tablist" aria-label="Registros de veículos">
+    <button type="button" class="tab-btn active" id="tab-entrada" role="tab" aria-selected="true" aria-controls="panel-entrada" data-tab="entrada">Veículos no pátio</button>
+    <button type="button" class="tab-btn" id="tab-saida" role="tab" aria-selected="false" aria-controls="panel-saida" tabindex="-1" data-tab="saida">Histórico de saídas</button>
 </div>
 
-<div class="tab-panel active" id="panel-entrada">
+<div class="tab-panel active" id="panel-entrada" role="tabpanel" aria-labelledby="tab-entrada">
     <div class="wrapper" th:classappend="${!ehAdmin} ? 'wrapper-unica'">
         <!-- Formulário só para ADMIN. Mesmo que alguém o recrie no navegador, o AdminInterceptor recusa o POST. -->
         <div class="card" style="animation-delay: 0.05s" th:if="${ehAdmin}">
@@ -36,7 +40,7 @@
 
                 <div class="form-group">
                     <label for="placa">Placa</label>
-                    <input type="text" id="placa" name="placa" th:value="${veiculo.placa}" placeholder="ABC1D23" maxlength="8"
+                    <input type="text" id="placa" name="placa" th:value="${veiculo.placa}" placeholder="ABC1D23" maxlength="8" autocapitalize="characters" spellcheck="false"
                        pattern="[A-Za-z]{3}-?[0-9][A-Za-z0-9][0-9]{2}" title="Formato ABC1234 ou ABC1D23" required>
                 </div>
 
@@ -55,7 +59,7 @@
                     <textarea id="observacao" name="observacao" rows="3" placeholder="Opcional" th:text="${veiculo.observacao}"></textarea>
                 </div>
 
-                <button type="submit" class="btn btn-bloco" th:text="${veiculo.id == null} ? 'Registrar entrada' : 'Salvar alterações'">Registrar entrada</button>
+                <button type="submit" class="btn btn-metal btn-bloco" th:text="${veiculo.id == null} ? 'Registrar entrada' : 'Salvar alterações'">Registrar entrada</button>
                 <a href="/veiculos" class="btn btn-secundario btn-bloco" th:if="${veiculo.id != null}">Cancelar edição</a>
             </form>
         </div>
@@ -65,17 +69,20 @@
             <h2>Veículos no pátio</h2>
 
             <form class="search-box" action="/veiculos" method="get">
-                <input type="text" id="buscaEntrada" name="placa" th:value="${placa}" placeholder="Pesquisar por placa..." oninput="filtrarTabela('tabelaEntrada', 'buscaEntrada')">
+                <input type="text" id="buscaEntrada" name="placa" th:value="${placa}" placeholder="Pesquisar por placa..." aria-label="Pesquisar veículos no pátio por placa" data-filter-table="tabelaEntrada">
+                <button type="submit" class="btn btn-secundario">Buscar</button>
             </form>
 
-            <table id="tabelaEntrada" th:if="${!veiculosAtivos.isEmpty()}">
+            <div class="table-scroll" tabindex="0" role="region" aria-label="Veículos no pátio">
+<table id="tabelaEntrada" th:if="${!veiculosAtivos.isEmpty()}">
+<caption class="sr-only">Veículos presentes no estacionamento</caption>
                 <thead>
                 <tr>
-                    <th>Placa</th>
-                    <th>Modelo</th>
-                    <th>Cor</th>
-                    <th>Entrada</th>
-                    <th th:if="${ehAdmin}">Ações</th>
+                    <th scope="col">Placa</th>
+                    <th scope="col">Modelo</th>
+                    <th scope="col">Cor</th>
+                    <th scope="col">Entrada</th>
+                    <th scope="col" th:if="${ehAdmin}">Ações</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -100,30 +107,34 @@
                 </tr>
                 </tbody>
             </table>
+            </div>
 
             <p class="empty" th:if="${veiculosAtivos.isEmpty()}" th:text="${placa != ''} ? 'Nenhum veículo no pátio com esta placa.' : 'Nenhum veículo no pátio no momento.'">Nenhum veículo no pátio no momento.</p>
         </div>
     </div>
 </div>
 
-<div class="tab-panel" id="panel-saida">
+<div class="tab-panel" id="panel-saida" role="tabpanel" aria-labelledby="tab-saida">
     <div class="card">
 
         <h2>Histórico de saídas</h2>
 
         <form class="search-box" action="/veiculos" method="get">
-            <input type="text" id="buscaSaida" name="placa" th:value="${placa}" placeholder="Pesquisar por placa..." oninput="filtrarTabela('tabelaSaida', 'buscaSaida')">
+            <input type="text" id="buscaSaida" name="placa" th:value="${placa}" placeholder="Pesquisar por placa..." aria-label="Pesquisar histórico por placa" data-filter-table="tabelaSaida">
+                <button type="submit" class="btn btn-secundario">Buscar</button>
         </form>
 
-        <table id="tabelaSaida" th:if="${!veiculosHistorico.isEmpty()}">
+        <div class="table-scroll" tabindex="0" role="region" aria-label="Histórico de saídas">
+<table id="tabelaSaida" th:if="${!veiculosHistorico.isEmpty()}">
+<caption class="sr-only">Histórico de entradas e saídas</caption>
             <thead>
             <tr>
-                <th>Placa</th>
-                <th>Modelo</th>
-                <th>Cor</th>
-                <th>Entrada</th>
-                <th>Saída</th>
-                <th th:if="${ehAdmin}">Ações</th>
+                <th scope="col">Placa</th>
+                <th scope="col">Modelo</th>
+                <th scope="col">Cor</th>
+                <th scope="col">Entrada</th>
+                <th scope="col">Saída</th>
+                <th scope="col" th:if="${ehAdmin}">Ações</th>
             </tr>
             </thead>
             <tbody>
@@ -142,33 +153,14 @@
             </tr>
             </tbody>
         </table>
+            </div>
 
         <p class="empty" th:if="${veiculosHistorico.isEmpty()}" th:text="${placa != ''} ? 'Nenhuma saída registrada para esta placa.' : 'Nenhuma saída registrada ainda.'">Nenhuma saída registrada ainda.</p>
     </div>
 </div>
 
-<script>
-    function mudarTab(nome) {
-        document.querySelectorAll('.tab-btn').forEach(function (btn) {
-            btn.classList.toggle('active', btn.dataset.tab === nome);
-        });
-        document.querySelectorAll('.tab-panel').forEach(function (panel) {
-            panel.classList.remove('active');
-        });
-        document.getElementById('panel-' + nome).classList.add('active');
-    }
 
-    function filtrarTabela(idTabela, idInput) {
-        var termo = document.getElementById(idInput).value.trim().toUpperCase();
-        var tabela = document.getElementById(idTabela);
-        if (!tabela) return;
 
-        tabela.querySelectorAll('tbody tr').forEach(function (linha) {
-            var placa = linha.querySelector('td').textContent.trim().toUpperCase();
-            linha.classList.toggle('hidden-row', termo !== '' && placa.indexOf(termo) === -1);
-        });
-    }
-</script>
-
+</main>
 </body>
 </html>

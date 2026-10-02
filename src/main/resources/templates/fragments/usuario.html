@@ -1,6 +1,6 @@
 <!-- Nome e perfil do usuário logado, com o botão Sair (POST + CSRF) -->
 <div class="user-menu" th:fragment="menu" xmlns:th="http://www.thymeleaf.org">
-    <button type="button" class="btn user-btn" onclick="toggleUserMenu()">
+    <button type="button" id="userMenuButton" aria-expanded="false" aria-controls="userDropdown" class="btn user-btn" onclick="toggleUserMenu()">
         <span th:text="${usuarioNome}">Usuário</span>
         <span class="badge-perfil" th:classappend="${ehAdmin} ? 'admin'" th:text="${usuarioTipo}">USER</span>
     </button>
@@ -15,7 +15,9 @@
     </div>
     <script>
         function toggleUserMenu() {
-            document.getElementById('userDropdown').classList.toggle('show');
+            var dropdown = document.getElementById('userDropdown');
+            var open = dropdown.classList.toggle('show');
+            document.getElementById('userMenuButton').setAttribute('aria-expanded', String(open));
         }
 
         document.addEventListener('click', function (event) {
@@ -23,6 +25,21 @@
             var dropdown = document.getElementById('userDropdown');
             if (menu && dropdown && !menu.contains(event.target)) {
                 dropdown.classList.remove('show');
+                document.getElementById('userMenuButton').setAttribute('aria-expanded', 'false');
+            }
+        });
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape' && document.getElementById('userDropdown').classList.contains('show')) {
+                document.getElementById('userDropdown').classList.remove('show');
+                var button = document.getElementById('userMenuButton');
+                button.setAttribute('aria-expanded', 'false');
+                button.focus();
+            }
+        });
+        document.querySelector('.user-menu').addEventListener('focusout', function (event) {
+            if (!this.contains(event.relatedTarget)) {
+                document.getElementById('userDropdown').classList.remove('show');
+                document.getElementById('userMenuButton').setAttribute('aria-expanded', 'false');
             }
         });
     </script>
