@@ -1,4 +1,4 @@
 <div th:fragment="mensagens" xmlns:th="http://www.thymeleaf.org">
-    <p class="alerta sucesso" th:if="${sucesso != null}" th:text="${sucesso}"></p>
-    <p class="alerta erro" th:if="${erro != null}" th:text="${erro}"></p>
+    <p class="alerta sucesso" role="status" th:if="${sucesso != null}" th:text="${sucesso}"></p>
+    <p class="alerta erro" role="alert" th:if="${erro != null}" th:text="${erro}"></p>
 </div>

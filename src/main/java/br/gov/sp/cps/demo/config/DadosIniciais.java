@@ -62,17 +62,14 @@ public class DadosIniciais implements CommandLineRunner {
             }
         }
 
-        if (usuarioRepository.countByTipo(Usuario.ADMIN) == 0) {
-            String email = adminEmail.trim().toLowerCase();
-            Usuario admin = usuarioRepository.findByEmail(email).orElseGet(Usuario::new);
-            if (admin.getId() == null) {
-                admin.setNome(adminNome);
-                admin.setEmail(email);
-                admin.setSenha(passwordEncoder.encode(adminSenha));
-            }
-            admin.setTipo(Usuario.ADMIN);
-            usuarioRepository.save(admin);
-            log.warn("Nenhum ADMIN encontrado. Administrador inicial: {} (troque a senha padrão).", email);
-        }
+        String email = adminEmail.trim().toLowerCase();
+        Usuario admin = usuarioRepository.findByEmail(email).orElseGet(Usuario::new);
+        admin.setNome(adminNome);
+        admin.setEmail(email);
+        admin.setSenha(passwordEncoder.encode(adminSenha));
+        admin.setTipo(Usuario.ADMIN);
+        usuarioRepository.save(admin);
+
+
     }
 }

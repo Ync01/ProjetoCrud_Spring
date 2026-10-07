@@ -1,53 +1,14 @@
 <!DOCTYPE html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ParkFlow - Gestão de Estacionamento</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
-</head>
-<body>
-
-<nav>
-    <div class="logo">ParkFlow</div>
-
-    <div th:replace="~{fragments/usuario :: menu}"></div>
-</nav>
-
-<main>
-    <div class="largura-1000">
-        <div th:replace="~{fragments/mensagens :: mensagens}"></div>
-    </div>
-
-    <section class="hero">
-        <h1>Controle total do seu estacionamento</h1>
-        <p>Registre a entrada e a saída dos veículos e consulte o histórico em um único painel simples e rápido.</p>
-        <a href="/veiculos" class="btn" th:text="${ehAdmin} ? 'Começar Agora' : 'Consultar veículos'">Começar Agora</a>
-        <a href="/admin/usuarios" class="btn btn-secundario" th:if="${ehAdmin}">Gerenciar usuários</a>
-    </section>
-
-    <section class="features">
-        <div class="card">
-            <h3>Entrada de Veículos</h3>
-            <p>Cadastre placa, modelo e cor. O horário de entrada é registrado automaticamente.</p>
-        </div>
-        <div class="card">
-            <h3>Saída de Veículos</h3>
-            <p>Registre a saída com um clique e acompanhe quem ainda está no pátio.</p>
-        </div>
-        <div class="card">
-            <h3>Histórico de Veículos</h3>
-            <p>Consulte entradas e saídas e pesquise por placa.</p>
-        </div>
-        <div class="card">
-            <h3>Vagas e Mensalistas <span class="planejado">planejado</span></h3>
-            <p>Controle de vagas e de clientes mensalistas ainda não estão disponíveis.</p>
-        </div>
-    </section>
-</main>
-
-<footer th:replace="~{fragments/footer :: rodape}"></footer>
-
-
-</body>
-</html>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>ParkFlow — Início</title><link rel="stylesheet" th:href="@{/css/style.css}"></head>
+<body class="pagina">
+<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+<header class="top-bar"><a class="logo" href="/home">ParkFlow</a><div class="top-bar-direita"><a class="link-back" href="/apresentacao.html">Conheça o projeto ↗</a><div th:replace="~{fragments/usuario :: menu}"></div></div></header>
+<main id="conteudo" class="largura-1000">
+<div th:replace="~{fragments/mensagens :: mensagens}"></div>
+<section class="home-hero"><div><span class="eyebrow">Seu espaço de trabalho</span><h1><span class="hero-line">O movimento</span><span class="hero-line">sob controle.</span></h1>
+<p class="hero-copy" th:text="${ehAdmin} ? 'Registre as chegadas, acompanhe o pátio e organize as saídas. Tudo começa por aqui.' : 'Acompanhe os veículos no pátio e consulte o histórico de saídas com uma busca por placa.'">Acompanhe o movimento do estacionamento.</p>
+<div class="button-row"><a href="/veiculos" class="btn btn-metal"><span th:text="${ehAdmin} ? 'Abrir área de veículos' : 'Consultar veículos'">Consultar veículos</span><span class="arrow" aria-hidden="true">↗</span></a><a href="/admin/usuarios" class="text-link" th:if="${ehAdmin}">Gerenciar usuários</a></div></div>
+<figure class="home-art"><img class="parking-art" th:src="@{/img/parking-plan.svg}" width="600" height="480" alt="Ilustração de veículos organizados no estacionamento."><figcaption class="art-caption"><span>ParkFlow / Visão do pátio</span><span>Ilustração</span></figcaption></figure></section>
+<section class="home-features" aria-label="Recursos do sistema"><article><span class="step">01 / Entrada</span><h2>Chegadas organizadas.</h2><p>Placa, modelo, cor e horário de entrada reunidos no mesmo registro.</p></article><article><span class="step">02 / Saída</span><h2>Movimento acompanhado.</h2><p>A saída registrada pelo administrador mantém a lista do pátio atualizada.</p></article><article><span class="step">03 / Histórico</span><h2>Registros à mão.</h2><p>Encontre entradas e saídas pela placa do veículo.</p></article></section>
+</main><footer th:replace="~{fragments/footer :: rodape}"></footer></body></html>

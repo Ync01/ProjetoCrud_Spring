@@ -8,9 +8,10 @@
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body class="pagina">
+<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
 
 <div class="top-bar">
-    <div class="logo">ParkFlow</div>
+    <a class="logo" href="/home">ParkFlow</a>
     <div class="top-bar-direita">
         <a href="/home" class="link-back">&larr; Voltar</a>
         <div th:replace="~{fragments/usuario :: menu}"></div>
@@ -21,6 +22,7 @@
     <div th:replace="~{fragments/mensagens :: mensagens}"></div>
 </div>
 
+<main id="conteudo"><header class="page-heading"><div><span class="eyebrow">Administração / Acessos</span><h1>As pessoas do ParkFlow.</h1><p>Cadastre usuários e organize os perfis de acesso ao sistema.</p></div><div class="page-count"><strong th:text="${usuarios.size()}">0</strong>usuários cadastrados</div></header>
 <div class="wrapper">
     <div class="card" style="animation-delay: 0.05s">
         <h2 th:text="${usuario.id == null} ? 'Novo usuário' : 'Editar usuário'">Novo usuário</h2>
@@ -63,7 +65,7 @@
                 </select>
             </div>
 
-            <button type="submit" class="btn btn-bloco" th:text="${usuario.id == null} ? 'Cadastrar usuário' : 'Salvar alterações'">Cadastrar usuário</button>
+            <button type="submit" class="btn btn-metal btn-bloco" th:text="${usuario.id == null} ? 'Cadastrar usuário' : 'Salvar alterações'">Cadastrar usuário</button>
             <a href="/admin/usuarios" class="btn btn-secundario btn-bloco" th:if="${usuario.id != null}">Cancelar edição</a>
         </form>
     </div>
@@ -71,13 +73,13 @@
     <div class="card" style="animation-delay: 0.1s">
         <h2>Usuários cadastrados</h2>
 
-        <table th:if="${!usuarios.isEmpty()}">
+        <div class="table-scroll" tabindex="0" role="region" aria-label="Usuários cadastrados"><table th:if="${!usuarios.isEmpty()}">
             <thead>
             <tr>
-                <th>Nome</th>
-                <th>E-mail</th>
-                <th>Perfil</th>
-                <th>Ações</th>
+                <th scope="col">Nome</th>
+                <th scope="col">E-mail</th>
+                <th scope="col">Perfil</th>
+                <th scope="col">Ações</th>
             </tr>
             </thead>
             <tbody>
@@ -94,7 +96,7 @@
                 </td>
             </tr>
             </tbody>
-        </table>
+        </table></div>
 
         <p class="empty" th:if="${usuarios.isEmpty()}">Nenhum usuário cadastrado.</p>
     </div>
@@ -111,5 +113,6 @@
     });
 </script>
 
+</main>
 </body>
 </html>
